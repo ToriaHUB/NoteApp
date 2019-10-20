@@ -6,8 +6,13 @@ const [value,setValue]=useState('');
 const alert= useContext(AlertContext);
     const submitHandler = event =>{
         event.preventDefault();
-        alert.show(value,'success')
-
+        if(value.trim()){
+            //...
+            alert.show('Note was created','success');
+            setValue('')
+        } else{
+            alert.show('Enter your note')
+        }
     };
     return(
         <form onSubmit={submitHandler}>

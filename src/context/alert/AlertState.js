@@ -27,8 +27,8 @@ export const AlertState = ({children})=>{
      */
     const hide=()=>dispatch({type:HIDE_ALERT});
     return (
-        <AlertContext.Provider value = {{show,hide,  //show:show
-        alert:state}}> //rename state object to alert object (contain visible value)
+        <AlertContext.Provider value = {{show,hide,  //show:show ,rename state object to alert object (contain visible value)
+        alert:state}}>
             {children}
         </AlertContext.Provider>
     )
