@@ -26,7 +26,7 @@ console.log(state);
           }
       });
         dispatch({type: FETCH_NOTES, payload})
-        debugger;
+
     };
 
 const addNote= async title=>{
@@ -46,6 +46,7 @@ const addNote= async title=>{
 
 const removeNote= async id =>{
     await axios.delete(`${url}/notes/${id}.json`);
+
     dispatch({
         type:REMOVE_NOTE,
         payload:id,
