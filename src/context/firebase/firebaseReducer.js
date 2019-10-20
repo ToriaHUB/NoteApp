@@ -1,21 +1,23 @@
 import {ADD_NOTE, FETCH_NOTES, REMOVE_NOTE, SHOW_LOADER} from "../types";
 
 const handlers = {
-    [SHOW_LOADER]: state=>{
-        return{...state, loading: true}},
-    [ADD_NOTE]: (state,{payload}) =>({
+    [SHOW_LOADER]: state => {
+        return {...state, loading: true}
+    },
+    [ADD_NOTE]: (state, {payload}) => ({
         ...state,
-        notes: [...state.notes,payload]
+        notes: [...state.notes, payload]
     }),
-    [FETCH_NOTES]:(state,{payload})=>{
-        return {...state, notes:payload, loading: false}
-        },
-    [REMOVE_NOTE]: (state,{payload})=>({
+    [FETCH_NOTES]: (state, {payload}) => {
+        return {...state, notes: payload, loading: false}
+    },
+    [REMOVE_NOTE]: (state, {payload}) => ({
         ...state,
-        notes:state.notes.filter(note=>note.id !== payload)
+        notes: state.notes.filter(note => note.id !== payload)
     }),
     DEFAULT: state => {
-        return state}
+        return state
+    }
 
 };
 
