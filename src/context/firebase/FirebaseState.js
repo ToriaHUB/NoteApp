@@ -1,8 +1,8 @@
 import React,{useReducer} from 'react'
 import {FirebaseContext} from "./firebaseContext";
 import axios from 'axios';
-import {firebaseReduser} from "./firebaseReduser";
-import {REMOVE_NOTE, SHOW_LOADER} from "../types";
+import {firebaseReducer} from "./firebaseReducer";
+import {ADD_NOTE, FETCH_NOTES, REMOVE_NOTE, SHOW_LOADER} from "../types";
 
 const url = process.env.REACT_APP_DB_URL;
 export const FirebaseState = ({children})=>{
@@ -11,14 +11,22 @@ export const FirebaseState = ({children})=>{
         notes: [],
         loading:false
     };
-    const [state, dispatch]=useReducer(firebaseReduser, initialState);
-
+    const [state, dispatch]=useReducer(firebaseReducer, initialState);
+console.log(state);
     const showLoader = ()=> dispatch({type:SHOW_LOADER});
     const fetchNotes = async ()=>{
         showLoader();
       const res = await axios.get(`${url}/notes.json`) ;
 
-      console.log('fetchNotes', res.data);
+
+     const payload = Object.keys(res.data).map(key=>{
+          return {
+              ...res.data[key],
+              id:key
+          }
+      });
+        dispatch({type: FETCH_NOTES, payload})
+        debugger;
     };
 
 const addNote= async title=>{
@@ -27,9 +35,12 @@ const addNote= async title=>{
     };
     try{
         const res = await axios.post(`${url}/notes.json`, note);
-        console.log('addNote', res.data)
-    }catch (e) {
-        throw new Error(e.message)
+        const payload = {
+            ...note,
+            id: res.data.name
+        };
+        dispatch({type: ADD_NOTE, payload})
+    }catch (e) { throw new Error(e.message)
     }
 };
 
